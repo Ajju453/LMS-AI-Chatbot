@@ -1,0 +1,208 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+          <h3 class="mb-0">
+            <i class="fas fa-key"></i> SSH Key Generator
+          </h3>
+        </div>
+        <div class="card-body">
+          <!-- Instructions -->
+          <div class="alert alert-info mb-4">
+            <h5>
+              <i class="fas fa-info-circle"></i> How to Generate SSH Keys
+            </h5>
+            <ol class="mb-0">
+              <li>Enter your email address (your Siemens email)</li>
+              <li>Specify the location where you want to save the keys</li>
+              <li>Click "Generate SSH Key"</li>
+              <li>Copy the public key to your Git server</li>
+              <li>Keep the private key secure on your local machine</li>
+            </ol>
+          </div>
+
+          <form [formGroup]="sshForm" (ngSubmit)="generateSSHKey()">
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">
+                <i class="fas fa-envelope"></i> Email Address
+              </label>
+              <input
+                type="email"
+                class="form-control form-control-lg"
+                id="email"
+                formControlName="email"
+                placeholder="your.email@siemens.com"
+                required
+              />
+              <small class="text-muted">
+                The email associated with your Git account
+              </small>
+            </div>
+
+            <!-- Key Path -->
+            <div class="mb-3">
+              <label for="keyPath" class="form-label fw-bold">
+                <i class="fas fa-folder"></i> Key Storage Path
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="keyPath"
+                formControlName="keyPath"
+                placeholder="/home/username/.ssh or C:\Users\USERNAME\.ssh"
+                required
+              />
+              <small class="text-muted">
+                Location where SSH keys will be stored
+              </small>
+            </div>
+
+            <!-- Key Type -->
+            <div class="mb-3">
+              <label for="keyType" class="form-label fw-bold">
+                <i class="fas fa-lock"></i> Key Type
+              </label>
+              <select
+                class="form-select form-select-lg"
+                id="keyType"
+                formControlName="keyType"
+              >
+                <option value="ed25519">ED25519 (Recommended)</option>
+                <option value="rsa">RSA 4096</option>
+              </select>
+              <small class="text-muted">
+                ED25519 is more secure and faster than RSA
+              </small>
+            </div>
+
+            <!-- Generate Button -->
+            <button
+              type="submit"
+              class="btn btn-success btn-lg w-100"
+              [disabled]="isLoading || sshForm.invalid"
+            >
+              <i *ngIf="!isLoading" class="fas fa-key"></i>
+              <span *ngIf="!isLoading">Generate SSH Key</span>
+              <span *ngIf="isLoading">
+                <span class="spinner-border spinner-border-sm me-2" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+                Generating Key...
+              </span>
+            </button>
+          </form>
+
+          <!-- Generated Key Display -->
+          <div *ngIf="sshKeyGenerated" class="card mt-5 border-success">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">
+                <i class="fas fa-check-circle"></i> SSH Key Generated Successfully!
+              </h5>
+            </div>
+            <div class="card-body">
+              <!-- Private Key Path -->
+              <div class="mb-3">
+                <label class="form-label fw-bold">
+                  <i class="fas fa-lock"></i> Private Key Path
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [value]="keyPath"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="copyPrivateKeyPath()"
+                  >
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <small class="text-muted d-block mt-2">
+                  <i class="fas fa-exclamation-triangle text-warning"></i>
+                  Keep this file secure and never share it!
+                </small>
+              </div>
+
+              <!-- Public Key -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label class="form-label fw-bold mb-0">
+                    <i class="fas fa-unlock"></i> Public Key
+                  </label>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="showPublicKey = !showPublicKey"
+                  >
+                    <i [class]="showPublicKey ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    {{ showPublicKey ? 'Hide' : 'Show' }}
+                  </button>
+                </div>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  [value]="generatedPublicKey"
+                  readonly
+                  [type]="showPublicKey ? 'text' : 'password'"
+                  style="font-size: 0.85rem; font-family: 'Courier New', monospace"
+                ></textarea>
+                <small class="text-muted d-block mt-2">
+                  <i class="fas fa-info-circle"></i>
+                  Add this key to your Git server (code.siemens.com)
+                </small>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="resetForm()"
+                >
+                  <i class="fas fa-redo"></i> Generate Another Key
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  (click)="copyPublicKey()"
+                >
+                  <i class="fas fa-copy"></i> Copy Public Key
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="downloadPublicKey()"
+                >
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+
+              <!-- Next Steps -->
+              <div class="alert alert-info mt-4">
+                <h6>
+                  <i class="fas fa-arrow-right"></i> Next Steps
+                </h6>
+                <ol class="mb-0">
+                  <li>
+                    Go to
+                    <a href="https://code.siemens.com" target="_blank"
+                      >code.siemens.com</a
+                    >
+                  </li>
+                  <li>Navigate to your SSH Keys settings</li>
+                  <li>Click "Add SSH Key" and paste the public key above</li>
+                  <li>Test the connection: <code>ssh -T git@code.siemens.com</code></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

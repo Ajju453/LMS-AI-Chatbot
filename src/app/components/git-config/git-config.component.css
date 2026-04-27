@@ -1,0 +1,81 @@
+.form-control-lg {
+  border-radius: 0.5rem;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.form-control-lg:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+  padding: 1.5rem;
+}
+
+.card-header h3,
+.card-header h5 {
+  color: white;
+}
+
+.form-check-input {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+hr {
+  border-top: 2px solid #e0e0e0;
+  margin: 2rem 0;
+}
+
+small {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sticky-top {
+    position: relative !important;
+    top: 0 !important;
+    margin-top: 2rem;
+  }
+}

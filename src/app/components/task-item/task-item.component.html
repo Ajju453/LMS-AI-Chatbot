@@ -1,0 +1,18 @@
+<div class="task-item" [class.completed]="task.completed">
+  <input 
+    type="checkbox" 
+    class="task-checkbox"
+    [checked]="task.completed"
+    (change)="toggleTask()">
+  
+  <div class="task-content">
+    <div class="task-title">{{ task.title }}</div>
+    <div class="task-description" *ngIf="task.description">
+      {{ task.description }}
+    </div>
+  </div>
+  
+  <button class="btn-delete" (click)="deleteTask()">
+    Delete
+  </button>
+</div>

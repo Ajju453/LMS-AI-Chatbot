@@ -1,0 +1,44 @@
+<div class="task-list-container">
+  <div class="filter-buttons">
+    <button
+      (click)="setFilter('all')"
+      [class.active]="filter === 'all'"
+      class="filter-btn"
+    >
+      All
+    </button>
+    <button
+      (click)="setFilter('active')"
+      [class.active]="filter === 'active'"
+      class="filter-btn"
+    >
+      Active
+    </button>
+    <button
+      (click)="setFilter('completed')"
+      [class.active]="filter === 'completed'"
+      class="filter-btn"
+    >
+      Completed
+    </button>
+  </div>
+
+  <div class="tasks" *ngIf="(tasks$ | async) as tasks">
+    <div *ngIf="getFilteredTasks(tasks).length === 0" class="no-tasks">
+      <p *ngIf="filter === 'active'">No active tasks</p>
+      <p *ngIf="filter === 'completed'">No completed tasks</p>
+      <p *ngIf="filter === 'all'">No tasks yet. Add one to get started!</p>
+    </div>
+
+    <app-task-item
+      *ngFor="let task of getFilteredTasks(tasks)"
+      [task]="task"
+      (taskToggled)="onTaskToggled($event)"
+      (taskDeleted)="onTaskDeleted($event)"
+    ></app-task-item>
+  </div>
+
+  <div *ngIf="(tasks$ | async) as tasks" class="task-stats">
+    <span>Total: {{ tasks.length }} | Active: {{ getActiveTasks(tasks) }} | Completed: {{ getCompletedTasks(tasks) }}</span>
+  </div>
+</div>

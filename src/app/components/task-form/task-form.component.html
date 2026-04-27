@@ -1,0 +1,31 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+  <div class="form-group">
+    <label for="title">Task Title</label>
+    <input
+      type="text"
+      id="title"
+      formControlName="title"
+      placeholder="Enter task title..."
+    />
+    <div class="error" *ngIf="title?.invalid && title?.touched">
+      <span *ngIf="title?.errors?.['required']">Title is required</span>
+      <span *ngIf="title?.errors?.['minlength']">Title must be at least 3 characters</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      placeholder="Add task description (optional)"
+    ></textarea>
+    <div class="error" *ngIf="description?.invalid && description?.touched">
+      <span *ngIf="description?.errors?.['maxlength']">Description cannot exceed 500 characters</span>
+    </div>
+  </div>
+
+  <button type="submit" class="btn-submit" [disabled]="taskForm.invalid">
+    + Add Task
+  </button>
+</form>

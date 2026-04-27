@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chatbot-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:learning_path_db
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_H2_CONSOLE_ENABLED: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+    networks:
+      - chatbot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/chatbot/data/teachers"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend-chatbot
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: http://backend:8080/api
+    container_name: chatbot-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - chatbot-network
+    environment:
+      - REACT_APP_API_URL=http://backend:8080/api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  chatbot-network:
+    driver: bridge
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gitvc-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8080/api
+    depends_on:
+      - backend
+    networks:
+      - gitvc-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  gitvc-network:
+    driver: bridge

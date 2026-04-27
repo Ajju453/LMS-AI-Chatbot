@@ -1,0 +1,65 @@
+<div class="app-wrapper">
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fas fa-code-branch"></i> Dev Suite
+      </a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" [class.active]="activeViewTab === 'git'" (click)="setViewTab('git')" style="cursor: pointer;">
+          <i class="fas fa-git-alt"></i> Git Setup
+        </a>
+        <a class="nav-link" [class.active]="activeViewTab === 'tasks'" (click)="setViewTab('tasks')" style="cursor: pointer;">
+          <i class="fas fa-tasks"></i> Task Manager
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Git Integration Dashboard Tab -->
+  <div *ngIf="activeViewTab === 'git'" class="tab-view">
+    <app-git-integration-dashboard></app-git-integration-dashboard>
+  </div>
+
+  <!-- Task Manager Tab -->
+  <div *ngIf="activeViewTab === 'tasks'" class="tab-view">
+    <div class="container task-manager-container">
+      <h1><i class="fas fa-tasks"></i> My Tasks</h1>
+      
+      <app-task-form (taskAdded)="onTaskAdded($event)"></app-task-form>
+      
+      <div class="filter-buttons" *ngIf="tasks.length > 0">
+        <button class="filter-btn" 
+                [class.active]="filterStatus === 'all'"
+                (click)="setFilter('all')">
+          <i class="fas fa-list"></i> All Tasks
+        </button>
+        <button class="filter-btn" 
+                [class.active]="filterStatus === 'active'"
+                (click)="setFilter('active')">
+          <i class="fas fa-spinner"></i> Active
+        </button>
+        <button class="filter-btn" 
+                [class.active]="filterStatus === 'completed'"
+                (click)="setFilter('completed')">
+          <i class="fas fa-check-circle"></i> Completed
+        </button>
+      </div>
+      
+      <div *ngIf="filteredTasks.length > 0" class="tasks-list">
+        <app-task-item 
+          *ngFor="let task of filteredTasks" 
+          [task]="task"
+          (taskDeleted)="onTaskDeleted($event)"
+          (taskToggled)="onTaskToggled($event)">
+        </app-task-item>
+      </div>
+      
+      <div class="empty-state" *ngIf="filteredTasks.length === 0">
+        <i class="fas fa-inbox"></i>
+        <p>{{ tasks.length === 0 ? 'No tasks yet. Add one to get started!' : 'No tasks in this filter.' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

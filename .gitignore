@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+frontend-chatbot/node_modules/
+frontend/node_modules/
+
+# Build artifacts and output
+build/
+bin/
+out/
+dist/
+frontend-chatbot/build/
+target/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# Logs
+*.log
+backend.log
+startup.log
+startup_log.txt
+
+# Angular cache
+.angular/cache/
+*.o
+*.a
+*.so
+*.exe
+*.dll
+*.lib
+
+# IDE and Editor
+.vscode/
+.idea/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.depend
+*.layout
+*.cbp
+CMakeUserPresets.json
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Runtime files
+tasks.dat
+*.log
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor backups
+*~
+*.swp
+*.swo
+*.bak
+node_modules

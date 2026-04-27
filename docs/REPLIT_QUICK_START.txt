@@ -1,0 +1,201 @@
+═════════════════════════════════════════════════════════════════════════════
+🚀 DEPLOY ON REPLIT (5 MINUTES - NO CREDIT CARD!)
+═════════════════════════════════════════════════════════════════════════════
+
+REPLIT IS THE EASIEST WAY TO DEPLOY YOUR CHATBOT!
+
+═════════════════════════════════════════════════════════════════════════════
+⚡ QUICKEST PATH (5 Steps)
+═════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Sign Up (1 minute)
+───────────────────────────
+1. Go to: https://replit.com
+2. Click "Sign Up"
+3. Use Google/GitHub (fastest!) or email
+4. NO CREDIT CARD NEEDED ✅
+
+STEP 2: Create Repl (1 minute)
+──────────────────────────────
+1. Click "Create" button
+2. Click "Create Repl"
+3. Template: "Node.js"
+4. Name: "chatbot-app"
+5. Click "Create Repl"
+
+STEP 3: Upload Your Files (2 minutes)
+──────────────────────────────────────
+You'll see a code editor with folders on left:
+
+1. Right-click any folder
+2. Click "Upload file"
+3. Select your files from:
+   - frontend-chatbot/ (entire folder)
+   - backend/target/ (JAR files)
+   - server.js (we created for you)
+   - package.json (already exists)
+
+OR drag & drop files into the left panel
+
+STEP 4: Install & Run
+─────────────────────
+Bottom of screen, you'll see a terminal.
+Type these commands:
+
+  npm install
+  npm start
+
+STEP 5: Get Your Live URL
+──────────────────────────
+After running, look for output like:
+
+  🚀 CHATBOT IS LIVE!
+  Server running at https://chatbot-app.YOUR_USERNAME.repl.co
+
+COPY THAT URL AND SHARE IT! 🎉
+
+═════════════════════════════════════════════════════════════════════════════
+✨ WHAT YOU GET
+═════════════════════════════════════════════════════════════════════════════
+
+✅ FREE hosting (no expiration)
+✅ FREE domain (your-app.repl.co)
+✅ NO credit card needed
+✅ Instant deployment
+✅ Auto-restart if crashes
+✅ Real-time logs
+✅ Easy file editing
+✅ 50 hours/month runtime (unlimited during active hours)
+
+═════════════════════════════════════════════════════════════════════════════
+📋 FILES YOU NEED
+═════════════════════════════════════════════════════════════════════════════
+
+Make sure to upload these:
+
+  ✓ server.js (we created this)
+  ✓ package.json (already in your project)
+  ✓ frontend-chatbot/ (entire folder)
+  ✓ backend/ (entire folder - optional if using separate API)
+
+═════════════════════════════════════════════════════════════════════════════
+🔧 CONFIGURATION
+═════════════════════════════════════════════════════════════════════════════
+
+If your frontend needs to call a backend API:
+
+Option A: Backend on same Replit (Easiest)
+───────────────────────────────────────────
+API calls use: http://localhost:3000/api
+
+Option B: Backend on different server
+──────────────────────────────────────
+Edit: frontend-chatbot/src/index.js
+
+Add at the top:
+  window.API_URL = 'https://your-backend-url';
+
+No changes needed - frontend automatically uses it!
+
+═════════════════════════════════════════════════════════════════════════════
+🧪 TESTING YOUR DEPLOYED APP
+═════════════════════════════════════════════════════════════════════════════
+
+After deployment, test these URLs:
+
+1. Main app: https://your-app.repl.co
+   → You should see the chatbot UI
+
+2. API health: https://your-app.repl.co/api/health
+   → Should return: {"status":"OK"}
+
+3. Login with roll number: 2223850
+   → Test authentication
+
+═════════════════════════════════════════════════════════════════════════════
+⚠️ COMMON ISSUES & FIXES
+═════════════════════════════════════════════════════════════════════════════
+
+Issue: "Module not found"
+Fix: Run "npm install"
+
+Issue: "Cannot find index.html"
+Fix: Make sure frontend-chatbot/build/ folder exists
+    If not, run:
+    cd frontend-chatbot
+    npm run build
+    cd ..
+
+Issue: "Port already in use"
+Fix: Replit auto-picks available port, usually port 3000
+
+Issue: Frontend shows blank
+Fix: Check browser console (F12)
+    Check Replit console for errors
+
+Issue: Backend returns 404
+Fix: Make sure server.js is in root directory
+    Make sure package.json has correct main: "server.js"
+
+═════════════════════════════════════════════════════════════════════════════
+💪 ADVANCED (Optional)
+═════════════════════════════════════════════════════════════════════════════
+
+Environment Variables:
+─────────────────────
+1. Click "Secrets" tab (lock icon on left)
+2. Add your Google API key:
+   Name: GEMINI_API_KEY
+   Value: AIzaSy... (your key)
+
+Database (Add later):
+───────────────────
+Replit offers free PostgreSQL, MongoDB integrations
+Connect from Settings > Database
+
+Custom Domain:
+──────────────
+Upgrade to paid Replit plan to use custom domain
+
+Always-On:
+──────────
+Free tier: Stops after 30 mins of inactivity
+Paid plan: 24/7 uptime
+
+═════════════════════════════════════════════════════════════════════════════
+📚 HELPFUL LINKS
+═════════════════════════════════════════════════════════════════════════════
+
+Replit Docs:        https://docs.replit.com
+Node.js Docs:       https://nodejs.org/docs
+Express Docs:       https://expressjs.com
+Replit Community:   https://discord.gg/replit
+Quick Support:      support@replit.com
+
+═════════════════════════════════════════════════════════════════════════════
+🎯 SUMMARY
+═════════════════════════════════════════════════════════════════════════════
+
+Time:          5-10 minutes total
+Cost:          $0 (completely FREE)
+Credit Card:   NOT needed
+Link:          https://your-app.repl.co
+Setup:         Just sign up, upload, click Run
+
+═════════════════════════════════════════════════════════════════════════════
+✨ YOU'RE READY!
+═════════════════════════════════════════════════════════════════════════════
+
+1. Go to https://replit.com
+2. Sign up (free, no card)
+3. Create Node.js Repl
+4. Upload your files
+5. Click "Run"
+6. Share the URL!
+
+Your chatbot will be live in minutes!
+No complicated setup, no credit card, completely free! 🚀
+
+═════════════════════════════════════════════════════════════════════════════
+Questions? Check REPLIT_DEPLOYMENT_GUIDE.md for detailed instructions!
+═════════════════════════════════════════════════════════════════════════════

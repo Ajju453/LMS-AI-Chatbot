@@ -1,0 +1,29 @@
+============================================================
+CHATBOT DEPLOYMENT INFO
+============================================================
+Generated: 03/25/2026 14:43:44
+
+FRONTEND URL:
+https://
+
+BACKEND URL:
+https:///api
+
+RESOURCE GROUP:
+ChatBot
+
+RESOURCE NAMES:
+- Backend App: ChatBot_Backend
+- Frontend App: ChatBot_Frontend
+
+TEST CREDENTIALS:
+Roll Numbers: 2223810 - 2223889
+Example: 2223850
+
+COST:
+FREE - Azure B1 tier (750 hrs/month per app)
+
+CLEANUP (stops all resources):
+az group delete --name ChatBot --yes
+
+============================================================

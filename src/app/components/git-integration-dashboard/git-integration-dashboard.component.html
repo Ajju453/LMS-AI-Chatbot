@@ -1,0 +1,353 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="hero-header text-white mb-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">
+        <i class="fas fa-code-branch"></i> Git-VSCode Integration Hub
+      </h1>
+      <p class="lead">
+        Effortlessly configure Git, generate SSH keys, and connect your projects
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Status Cards -->
+    <div class="row mb-5">
+      <div class="col-md-3 mb-3">
+        <div class="status-card">
+          <div class="status-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h6>Git Config</h6>
+          <p class="status-badge" [class.active]="gitConfigured">
+            {{ gitConfigured ? 'Configured' : 'Not Configured' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="status-card">
+          <div class="status-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <h6>SSH Keys</h6>
+          <p class="status-badge" [class.pending]="!sshConfigured">
+            {{ sshConfigured ? 'Ready' : 'Pending' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="status-card">
+          <div class="status-icon">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <h6>Connection</h6>
+          <p class="status-badge" [class]="connectionStatusClass">
+            {{ connectionStatus }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="status-card">
+          <div class="status-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h6>VSCode</h6>
+          <p class="status-badge pending">
+            Ready
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="card shadow-lg mb-5">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'overview'"
+              (click)="setActiveTab('overview')"
+              type="button"
+            >
+              <i class="fas fa-home"></i> Overview
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'git-config'"
+              (click)="setActiveTab('git-config')"
+              type="button"
+            >
+              <i class="fas fa-cog"></i> Git Configuration
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'ssh-keys'"
+              (click)="setActiveTab('ssh-keys')"
+              type="button"
+            >
+              <i class="fas fa-key"></i> SSH Keys
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              [class.active]="activeTab === 'guides'"
+              (click)="setActiveTab('guides')"
+              type="button"
+            >
+              <i class="fas fa-book"></i> Guides
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <!-- Overview Tab -->
+        <div *ngIf="activeTab === 'overview'" class="tab-content">
+          <h3 class="mb-4">
+            <i class="fas fa-rocket"></i> Getting Started
+          </h3>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-cog"></i>
+                </div>
+                <h5>Configure Git</h5>
+                <p>
+                  Set up your Git username, email, and core settings for seamless
+                  version control.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-key"></i>
+                </div>
+                <h5>Generate SSH Keys</h5>
+                <p>
+                  Create secure SSH keys for authentication with your Git server
+                  without password prompts.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-link"></i>
+                </div>
+                <h5>Connect Repositories</h5>
+                <p>
+                  Link your Git repositories to VSCode and manage projects
+                  efficiently.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-check"></i>
+                </div>
+                <h5>Verify Setup</h5>
+                <p>
+                  Test your Git connection and ensure everything is configured
+                  correctly.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-5" />
+
+          <!-- Quick Actions -->
+          <h4 class="mb-3">Quick Actions</h4>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-primary" (click)="setActiveTab('git-config')">
+              <i class="fas fa-cog"></i> Configure Git
+            </button>
+            <button class="btn btn-success" (click)="setActiveTab('ssh-keys')">
+              <i class="fas fa-key"></i> Generate SSH Keys
+            </button>
+            <button class="btn btn-info" (click)="testGitConnection()" [disabled]="isLoading">
+              <i class="fas fa-network-wired"></i>
+              {{ isLoading ? 'Testing...' : 'Test Connection' }}
+            </button>
+            <button class="btn btn-warning" (click)="cloneRepository()" [disabled]="isLoading">
+              <i class="fas fa-clone"></i> Clone Repository
+            </button>
+            <button class="btn btn-secondary" (click)="openVSCode()">
+              <i class="fas fa-window-restore"></i> Open VSCode
+            </button>
+            <button class="btn btn-dark" (click)="openGitServer()">
+              <i class="fas fa-globe"></i> Open Git Server
+            </button>
+          </div>
+        </div>
+
+        <!-- Git Config Tab -->
+        <div *ngIf="activeTab === 'git-config'" class="tab-content">
+          <app-git-config></app-git-config>
+        </div>
+
+        <!-- SSH Keys Tab -->
+        <div *ngIf="activeTab === 'ssh-keys'" class="tab-content">
+          <app-ssh-key-generator></app-ssh-key-generator>
+        </div>
+
+        <!-- Guides Tab -->
+        <div *ngIf="activeTab === 'guides'" class="tab-content">
+          <div class="guides-container">
+            <h3 class="mb-4">Setup Guides</h3>
+
+            <!-- Windows Guide -->
+            <div class="guide-card">
+              <div class="guide-header">
+                <i class="fab fa-windows"></i> Windows Setup Guide
+              </div>
+              <div class="guide-content">
+                <ol>
+                  <li>
+                    <strong>Configure Git:</strong>
+                    <ul>
+                      <li>Fill in your username and email in the Git Configuration tab</li>
+                      <li>Download or copy the .gitconfig content</li>
+                      <li>Save it as .gitconfig in your user home directory</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Generate SSH Key:</strong>
+                    <ul>
+                      <li>Go to SSH Keys tab and enter your email</li>
+                      <li>Click "Generate SSH Key"</li>
+                      <li>Copy the public key and add it to code.siemens.com</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Test Connection:</strong>
+                    <ul>
+                      <li>Open Git Bash or PowerShell</li>
+                      <li>Run: <code>ssh -T git@code.siemens.com</code></li>
+                      <li>You should see a success message</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Reboot System:</strong>
+                    <ul>
+                      <li>Reboot your computer for all components to take effect</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Linux/Mac Guide -->
+            <div class="guide-card">
+              <div class="guide-header">
+                <i class="fab fa-linux"></i> Linux/Mac Setup Guide
+              </div>
+              <div class="guide-content">
+                <ol>
+                  <li>
+                    <strong>Configure Git using Terminal:</strong>
+                    <ul>
+                      <li>
+                        Run:
+                        <code>git config --global user.name "Your Name"</code>
+                      </li>
+                      <li>
+                        Run:
+                        <code>git config --global user.email "your.email@siemens.com"</code>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Generate SSH Key:</strong>
+                    <ul>
+                      <li>Use the SSH Keys tab or run in terminal:</li>
+                      <li>
+                        <code>ssh-keygen -t ed25519 -C "your.email@siemens.com"</code>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Add SSH Key to Agent:</strong>
+                    <ul>
+                      <li>
+                        <code>eval "$(ssh-agent -s)"</code>
+                      </li>
+                      <li>
+                        <code>ssh-add ~/.ssh/id_ed25519</code>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Copy Public Key to Git Server:</strong>
+                    <ul>
+                      <li>
+                        <code>cat ~/.ssh/id_ed25519.pub</code>
+                      </li>
+                      <li>
+                        Copy output and add to code.siemens.com SSH Keys
+                      </li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="guide-card">
+              <div class="guide-header">
+                <i class="fas fa-bug"></i> Troubleshooting
+              </div>
+              <div class="guide-content">
+                <h6>SSH Key Not Working:</h6>
+                <ul>
+                  <li>Ensure the public key is added to code.siemens.com</li>
+                  <li>Check file permissions: <code>chmod 700 ~/.ssh</code></li>
+                  <li>Verify key path is correct in .gitconfig</li>
+                </ul>
+                <h6 class="mt-3">Git Config Not Applied:</h6>
+                <ul>
+                  <li>Restart VSCode and terminal windows</li>
+                  <li>Run <code>git config --list</code> to verify settings</li>
+                  <li>For Windows, reboot after making changes</li>
+                </ul>
+                <h6 class="mt-3">Connection Failures:</h6>
+                <ul>
+                  <li>Check internet connection</li>
+                  <li>Verify firewall allows SSH (port 22)</li>
+                  <li>Test with:
+                    <code>ssh -T git@code.siemens.com</code>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center py-4 mb-5">
+      <p class="text-muted">
+        <i class="fas fa-info-circle"></i>
+        Need help? Refer to the Guides tab or contact your administrator.
+      </p>
+    </div>
+  </div>
+</div>
