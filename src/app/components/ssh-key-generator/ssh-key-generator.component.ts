@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GitIntegrationService } from '../../services/git-integration.service';
 
 @Component({
   selector: 'app-ssh-key-generator',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './ssh-key-generator.component.html',
   styleUrls: ['./ssh-key-generator.component.css']
 })

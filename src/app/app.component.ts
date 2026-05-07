@@ -3,11 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
-import { GitIntegrationDashboardComponent } from './components/git-integration-dashboard/git-integration-dashboard.component';
-import { GitConfigComponent } from './components/git-config/git-config.component';
-import { SshKeyGeneratorComponent } from './components/ssh-key-generator/ssh-key-generator.component';
 import { TaskService } from './services/task.service';
-import { GitIntegrationService } from './services/git-integration.service';
 import { Task } from './models/task.model';
 
 @Component({
@@ -18,32 +14,24 @@ import { Task } from './models/task.model';
     FormsModule,
     ReactiveFormsModule,
     TaskFormComponent,
-    TaskItemComponent,
-    GitIntegrationDashboardComponent,
-    GitConfigComponent,
-    SshKeyGeneratorComponent
+    TaskItemComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TaskService, GitIntegrationService]
+  providers: [TaskService]
 })
 export class AppComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   filterStatus: 'all' | 'active' | 'completed' = 'all';
-  activeViewTab: 'tasks' | 'git' = 'git';
 
-  constructor(private taskService: TaskService, private gitService: GitIntegrationService) {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.taskService.getTasks().subscribe((tasks) => {
       this.tasks = tasks;
       this.applyFilter();
     });
-  }
-
-  setViewTab(tab: 'tasks' | 'git'): void {
-    this.activeViewTab = tab;
   }
 
   onTaskAdded(task: { title: string; description: string }): void {

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { GitIntegrationService } from '../../services/git-integration.service';
+import { GitConfigComponent } from '../git-config/git-config.component';
+import { SshKeyGeneratorComponent } from '../ssh-key-generator/ssh-key-generator.component';
 
 @Component({
   selector: 'app-git-integration-dashboard',
+  standalone: true,
+  imports: [CommonModule, GitConfigComponent, SshKeyGeneratorComponent],
   templateUrl: './git-integration-dashboard.component.html',
   styleUrls: ['./git-integration-dashboard.component.css']
 })

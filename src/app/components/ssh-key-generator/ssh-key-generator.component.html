@@ -148,7 +148,7 @@
                   rows="4"
                   [value]="generatedPublicKey"
                   readonly
-                  [type]="showPublicKey ? 'text' : 'password'"
+                  [style.webkitTextSecurity]="showPublicKey ? 'none' : 'disc'"
                   style="font-size: 0.85rem; font-family: 'Courier New', monospace"
                 ></textarea>
                 <small class="text-muted d-block mt-2">
@@ -196,7 +196,7 @@
                   </li>
                   <li>Navigate to your SSH Keys settings</li>
                   <li>Click "Add SSH Key" and paste the public key above</li>
-                  <li>Test the connection: <code>ssh -T git@code.siemens.com</code></li>
+                  <li>Test the connection: <code>ssh -T git&#64;code.siemens.com</code></li>
                 </ol>
               </div>
             </div>
